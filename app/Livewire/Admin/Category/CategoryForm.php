@@ -28,13 +28,13 @@ class CategoryForm extends Component
     public $imageToDelete = '';
     public $iteration = 0;
 
-
-    public function resetInputs()
+    public function resetImageInputs()
     {
         $this->images = [];
         $this->imageToDelete = '';
         $this->iteration++;
     }
+
     public function mount(Category $category)
     {
         $this->category = $category;
@@ -56,8 +56,7 @@ class CategoryForm extends Component
 
     public function addCategory()
     {
-        // $this->validate();
-        // dd($this->category);
+        $this->validate();
         $this->category->is_active = $this->category->is_active ? 1 : 0;
 
         $this->category->save();
@@ -83,7 +82,7 @@ class CategoryForm extends Component
 
             session()->flash('message', 'Images Uploaded Successfully');
             $this->dispatch('close-add-image-modal');
-            // $this->resetInputs();
+            $this->resetImageInputs();
         }
     }
 }

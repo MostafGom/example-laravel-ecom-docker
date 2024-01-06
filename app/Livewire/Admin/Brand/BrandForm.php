@@ -25,7 +25,7 @@ class BrandForm extends Component
     public $imageToDelete = '';
     public $iteration = 0;
 
-    public function resetInputs()
+    public function resetImageInputs()
     {
         $this->images = [];
         $this->imageToDelete = '';
@@ -75,7 +75,7 @@ class BrandForm extends Component
 
             session()->flash('message', 'Images Uploaded Successfully');
             $this->dispatch('close-add-image-modal');
-            // $this->resetInputs();
+            $this->resetImageInputs();
         }
     }
 }
