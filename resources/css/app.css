@@ -1,0 +1,44 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+[x-cloak] {
+    display: none !important;
+}
+
+@layer base {
+    .fullwidthselect2>span {
+        @apply w-full !important;
+    }
+
+    .fullwidthselect2 .select2-selection.select2-selection--multiple {
+        @apply p-2.5 rounded-lg !important;
+    }
+
+    .fullwidthselect2 .select2-selection.select2-selection--single {
+        @apply h-12 flex items-center rounded-lg !important;
+    }
+
+    .fullwidthselect2 .select2-selection__arrow {
+        @apply h-12 !important;
+    }
+
+
+}
+
+::-webkit-scrollbar {
+    width: 7px;
+    height: 7px;
+}
+
+::-webkit-scrollbar-track {
+    background: #2D3748;
+}
+
+::-webkit-scrollbar-thumb {
+    background: #CBD5E0;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: #718096;
+}
