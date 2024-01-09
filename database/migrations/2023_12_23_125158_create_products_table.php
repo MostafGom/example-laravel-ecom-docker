@@ -22,8 +22,8 @@ return new class extends Migration
             $table->string('thumbnail')->nullable();
             $table->tinyInteger('is_active')->default(1);
 
-            $table->unsignedBigInteger('brand_id');
-            $table->foreign('brand_id')->references('id')->on('brands');
+            $table->unsignedBigInteger('brand_id')->nullable();
+            $table->foreign('brand_id')->references('id')->on('brands')->onDelete('set null');
             $table->timestamps();
         });
     }
