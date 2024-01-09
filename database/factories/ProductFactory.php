@@ -17,7 +17,7 @@ class ProductFactory extends Factory
      */
     public function definition(): array
     {
-        $fakeTitle = fake()->title();
+        $fakeTitle = fake()->word();
 
         return [
             'name' => $fakeTitle,
