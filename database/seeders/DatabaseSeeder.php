@@ -15,6 +15,7 @@ use Illuminate\Support\Str;
 
 class DatabaseSeeder extends Seeder
 {
+    private $numberOfBrands = 20;
     /**
      * Seed the application's database.
      */
@@ -33,14 +34,40 @@ class DatabaseSeeder extends Seeder
             'is_admin' => 0
         ]);
 
-        Image::factory(100)->create();
-        Category::factory(100)->create();
-        Brand::factory(100)->create();
-        Product::factory(100)->create();
-        Product::factory(100)->create();
+        Brand::factory($this->numberOfBrands)->create();
+        Category::factory(50)->create();
+        Image::factory(500)->create();
+
+        $categoriesIDs = DB::table('categories')->pluck('id');
+        $imagesIDs = DB::table('images')->pluck('id');
+        $imagesSeeded = DB::select('select * from images');
+
+        foreach (range(1, 200) as $index) {
+            $fakeTitle = fake()->word();
+            $randomImageIndex = rand(1, 499);
+            $randomImage = $imagesSeeded[$randomImageIndex];
+
+            Product::factory()->create([
+                'name' => $fakeTitle,
+                'slug' => Str::slug($fakeTitle),
+                'short_description' => fake()->text(),
+                'long_description' => fake()->text(),
+                'price' => fake()->numberBetween(99, 999),
+                'sku' => fake()->word(),
+                'thumbnail' => json_encode(['id' => $randomImage->id, 'image_path' => $randomImage->image_path]),
+                'brand_id' => rand(1, $this->numberOfBrands),
+            ]);
+        }
 
         $productsIDs = DB::table('products')->pluck('id');
-        $categoriesIDs = DB::table('categories')->pluck('id');
+
+
+        foreach (range(1, 500) as $index) {
+            DB::table('image_product')->insert([
+                'product_id' => fake()->randomElement($productsIDs),
+                'image_id' => fake()->randomElement($imagesIDs)
+            ]);
+        }
 
         foreach (range(1, 200) as $index) {
             DB::table('category_product')->insert([

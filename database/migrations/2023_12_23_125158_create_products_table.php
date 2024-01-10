@@ -19,7 +19,7 @@ return new class extends Migration
             $table->text('long_description');
             $table->decimal('price');
             $table->string('sku');
-            $table->string('thumbnail')->nullable();
+            $table->json('thumbnail')->nullable();
             $table->tinyInteger('is_active')->default(1);
 
             $table->unsignedBigInteger('brand_id')->nullable();

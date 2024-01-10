@@ -16,7 +16,7 @@ class AdminMiddleware
      */
     public function handle(Request $request, Closure $next): Response
     {
-        if (!Auth::user()->is_admin == '1' && !Auth::user()->admin == '1') {
+        if (!Auth::user()->is_admin == '1') {
             return redirect('/profile')->with('status', 'Access Denied');
         }
         return $next($request);

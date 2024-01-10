@@ -135,11 +135,12 @@ $watch('selectedThumbnail', (val) => {
         {{-- Thumbnail --}}
         <div class="grid gap-6 mb-6 md:grid-cols-1">
             <x-input-label class="font-bold text-xl text-white dark:text-gray-800" for="brand_id" :value="__('Product Thumbnail:')" />
-            <p x-text="selectedThumbnail.id != 0 ? '' : 'No Thumbnail Selected' " class="text-center text-red-600"></p>
+            <p x-show="selectedThumbnail.id == 0" x-text="'No Thumbnail Selected'" class="text-center text-red-600"></p>
 
             <div class="flex gap-4 justify-start items-center  flex-wrap my-4">
-                <div x-cloak x-show="selectedThumbnail.image_path" class="relative p-4 rounded-lg bg-gray-100">
+                <div x-cloak x-show="selectedThumbnail.image_path != ''" class="relative p-4 rounded-lg bg-gray-100">
                     <img class='w-[100px] h-[100px] object-contain' :src="selectedThumbnail.image_path" alt="imagealt">
+                    <p x-text="selectedThumbnail"></p>
                     <button type='button' class="bg-red-600 rounded-full absolute left-0 top-0"
                         x-on:click="removeThumbnail()">
                         <x-svgicons.xmark-svg-icon />
@@ -247,18 +248,21 @@ $watch('selectedThumbnail', (val) => {
         @include('components.image-preview-modal')
         @include('components.add-image-modal')
     </div>
+
 </div>
-
-
-
 @script
     <script>
         Alpine.data('selectedImagesComponent', () => {
             return {
                 selectedImages: @json($productImages),
-                selectedThumbnail: @json($product->thumbnail ?: ['id' => 0, 'image_path' => '']),
+                selectedThumbnail: {!! $product->thumbnail !!} || {
+                    'id': 0,
+                    'image_path': ''
+                },
+
                 init() {
                     console.log(this.selectedImages);
+                    console.log(this.selectedThumbnail);
                 },
                 removeImage(id) {
                     this.selectedImages = this.selectedImages.filter(item => item.id !== id);

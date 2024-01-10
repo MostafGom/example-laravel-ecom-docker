@@ -80,7 +80,6 @@ class ProductForm extends Component
         foreach ($this->productImages as $value) {
             array_push($this->productImagesIds, $value['id']);
         }
-        dd($this->productImages);
         $this->validate();
         $this->product->save();
         $this->product->images()->sync($this->productImagesIds);
