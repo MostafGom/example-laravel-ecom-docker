@@ -3,7 +3,11 @@ $watch('selectedImages', (val) => {
     console.log('val');
     console.log(val);
     $wire.productImages = selectedImages
-})">
+});
+$watch('selectedThumbnail', (val) => {
+    console.log(val);
+    $wire.product.thumbnail = selectedThumbnail
+});">
 
     <form wire:submit.prevent="addProduct" class="p-6 bg-gray-900 dark:bg-white shadow-maintomato rounded-2xl">
         @csrf
@@ -126,6 +130,29 @@ $watch('selectedImages', (val) => {
                 </x-secondary-button>
             </div>
         </div>
+        <hr class="h-px my-8 bg-gray-200 border-0 dark:bg-gray-700">
+
+        {{-- Thumbnail --}}
+        <div class="grid gap-6 mb-6 md:grid-cols-1">
+            <x-input-label class="font-bold text-xl text-white dark:text-gray-800" for="brand_id" :value="__('Product Thumbnail:')" />
+            <p x-text="selectedThumbnail.id != 0 ? '' : 'No Thumbnail Selected' " class="text-center text-red-600"></p>
+
+            <div class="flex gap-4 justify-start items-center  flex-wrap my-4">
+                <div x-cloak x-show="selectedThumbnail.image_path" class="relative p-4 rounded-lg bg-gray-100">
+                    <img class='w-[100px] h-[100px] object-contain' :src="selectedThumbnail.image_path" alt="imagealt">
+                    <button type='button' class="bg-red-600 rounded-full absolute left-0 top-0"
+                        x-on:click="removeThumbnail()">
+                        <x-svgicons.xmark-svg-icon />
+                    </button>
+                </div>
+            </div>
+            <div>
+                <x-secondary-button type="button"
+                    x-on:click.prevent="$dispatch('open-modal', { name: 'choose-thumbnail'})">
+                    {{ __('Choose thumbnail more from gallery') }}
+                </x-secondary-button>
+            </div>
+        </div>
 
         <hr class="h-px my-8 bg-gray-200 border-0 dark:bg-gray-700">
 
@@ -181,6 +208,39 @@ $watch('selectedImages', (val) => {
     </x-modal>
     {{-- END IMAGE LIBRARY MODAL --}}
 
+    {{-- START Thumbnail MODAL --}}
+    <x-modal maxWidth="80percent" height="h-full" wire:ignore.self name="choose-thumbnail" :show="$errors->imageAddition->isNotEmpty()"
+        focusable>
+        <div class="p-4 h-full flex flex-col justify-between overflow-y-auto gap-4">
+            <div class=" grid grid-cols-3 md:grid-cols-5 gap-8 justify-center items-stretch ">
+                @foreach ($imagesInLibrary as $image)
+                    <x-image-select-element width="w-[100px]" :image="$image"
+                        xBindClass="(selectedThumbnail && selectedThumbnail.id == {{ $image->id }}) ? 'selected border-red-600 border-[0.25rem] p-1' : 'p-2'"
+                        clickAction="(selectedThumbnail && selectedThumbnail.id == {{ $image->id }}) ? (
+                        selectedThumbnail = {'id':0,'image_path':''}
+                    ) : (
+                        selectedThumbnail = {'id':{{ $image->id }},'image_path':'{{ $image->image_path }}'}
+                    );"
+                        data-id="{{ $image->id }}-allimgs" />
+                @endforeach
+            </div>
+            <div class="rounded-xl mx-auto bg-white bg-opacity-50 w-full" x-data="">
+                @if ($imagesInLibrary->hasPages())
+                    <div class="rounded-xl  p-2 font-bold ">
+                        {{ $imagesInLibrary->links() }}
+                    </div>
+                @endif
+            </div>
+            <div class="rounded-xl mx-auto flex justify-end w-full" x-data="">
+                <x-primary-button type="button" x-on:click.prevent="$dispatch('close')">
+                    {{ __('Done') }}
+                </x-primary-button>
+
+            </div>
+        </div>
+    </x-modal>
+    {{-- END Thumbnail MODAL --}}
+
 
     <div>
         {{-- @include('livewire.admin.product.image-gallery-options') --}}
@@ -196,11 +256,18 @@ $watch('selectedImages', (val) => {
         Alpine.data('selectedImagesComponent', () => {
             return {
                 selectedImages: @json($productImages),
+                selectedThumbnail: @json($product->thumbnail ?: ['id' => 0, 'image_path' => '']),
                 init() {
                     console.log(this.selectedImages);
                 },
                 removeImage(id) {
                     this.selectedImages = this.selectedImages.filter(item => item.id !== id);
+                },
+                removeThumbnail() {
+                    this.selectedThumbnail = {
+                        'id': 0,
+                        'image_path': ''
+                    };
                 },
             }
         });
