@@ -140,7 +140,6 @@ $watch('selectedThumbnail', (val) => {
             <div class="flex gap-4 justify-start items-center  flex-wrap my-4">
                 <div x-cloak x-show="selectedThumbnail.image_path != ''" class="relative p-4 rounded-lg bg-gray-100">
                     <img class='w-[100px] h-[100px] object-contain' :src="selectedThumbnail.image_path" alt="imagealt">
-                    <p x-text="selectedThumbnail"></p>
                     <button type='button' class="bg-red-600 rounded-full absolute left-0 top-0"
                         x-on:click="removeThumbnail()">
                         <x-svgicons.xmark-svg-icon />
