@@ -7,7 +7,6 @@
         </div>
     @endif
     <div class="max-w-7xl mx-auto">
-        {{-- <div class="max-w-7xl mx-auto sm:px-6 lg:px-8"> --}}
         <div>
             <section class="mt-10">
                 <div class="mx-auto max-w-screen-xl px-4 lg:px-12">
@@ -127,20 +126,15 @@
             </div>
         @endif
         <div>
-
-            <div class="">
-                @include('components.image-preview-modal')
-
-                @include('components.delete-confirm-modal', [
-                    'name' => 'confirm-product-deletion',
-                    'errorDeletion' => 'productDeletion',
-                    'destroyMethod' => 'destroyProduct',
-                    'closeEvent' => 'close-delete-product-modal',
-                    'confirmationMessage' => 'Are you sure you want to delete your product?',
-                    'confirmationWarningMessage' =>
-                        'Once your product is deleted, all of its resources and data will be permanently deleted.',
-                ])
-            </div>
+            @include('components.delete-confirm-modal', [
+                'name' => 'confirm-product-deletion',
+                'errorDeletion' => 'productDeletion',
+                'destroyMethod' => 'destroyProduct',
+                'closeEvent' => 'close-delete-product-modal',
+                'confirmationMessage' => 'Are you sure you want to delete your product?',
+                'confirmationWarningMessage' =>
+                    'Once your product is deleted, all of its resources and data will be permanently deleted.',
+            ])
         </div>
 
     </div>

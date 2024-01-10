@@ -1,4 +1,10 @@
-<div>
+<div x-data="selectedImagesComponent" x-init="console.log(selectedImages);
+$watch('selectedImages', (val) => {
+    console.log('val');
+    console.log(val);
+    $wire.productImages = selectedImages
+})">
+
     <form wire:submit.prevent="addProduct" class="p-6 bg-gray-900 dark:bg-white shadow-maintomato rounded-2xl">
         @csrf
         <h2 class="text-lg font-medium text-gray-900 dark:text-gray-900">
@@ -6,6 +12,7 @@
         </h2>
         <hr class="my-6">
         <div class="grid gap-10 mb-6 md:grid-cols-2">
+
             {{-- NAME --}}
             <div>
                 <x-input-label class="font-bold text-xl text-white dark:text-gray-800" for="name" :value="__('Name')" />
@@ -57,8 +64,12 @@
                     wire:model="product.long_description"></textarea>
                 <x-input-error :messages="$errors->get('product.long_description')" class="mt-2" />
             </div>
+
+            {{-- BRAND --}}
             <div>
-                <div class="fullwidthselect2" wire:ignore>
+                <x-input-label class="font-bold text-xl text-white dark:text-gray-800" for="brand_id"
+                    :value="__('Choose Brand')" />
+                <div class="fullwidthselect2 mt-2" wire:ignore>
                     <select wire:model="product.brand_id" class="w-full" id="brandsselect"
                         data-placeholder="Choose brand" x-on:change="console.log($event)">
                         <option></option>
@@ -70,8 +81,12 @@
                 </div>
                 <x-input-error :messages="$errors->get('product.brand_id')" class="mt-2" />
             </div>
+
+            {{-- CATEGORIES --}}
             <div>
-                <div class="fullwidthselect2" wire:ignore>
+                <x-input-label class="font-bold text-xl text-white dark:text-gray-800" for="brand_id"
+                    :value="__('Choose Categories')" />
+                <div class="fullwidthselect2 mt-2" wire:ignore>
                     <select wire:model="productCategoriesIds" multiple class="w-full" id="categoriesselect"
                         data-placeholder="Choose categories" x-on:change="console.log('categories on change')">
                         <option></option>
@@ -84,8 +99,37 @@
             </div>
         </div>
 
-        <div class="grid gap-6 mb-6 md:grid-cols-1">
+        <hr class="h-px my-8 bg-gray-200 border-0 dark:bg-gray-700">
 
+        {{-- IMAGES --}}
+        <div class="grid gap-6 mb-6 md:grid-cols-1">
+            <x-input-label class="font-bold text-xl text-white dark:text-gray-800" for="brand_id" :value="__('Selected Images:')" />
+            <p x-text="selectedImages.length ? '' : 'No Images Selected' " class="text-center text-red-600"></p>
+
+            <div class="flex gap-4 justify-start items-center  flex-wrap my-4">
+                <template x-for="image in selectedImages" :key="image.id">
+                    <div>
+                        <div class="relative p-4 rounded-lg bg-gray-100">
+                            <img class='w-[100px] h-[100px] object-contain' :src="image.image_path" alt="imagealt">
+                            <button type='button' class="bg-red-600 rounded-full absolute left-0 top-0"
+                                x-on:click="removeImage(image.id)">
+                                <x-svgicons.xmark-svg-icon />
+                            </button>
+                        </div>
+                    </div>
+                </template>
+            </div>
+            <div>
+                <x-secondary-button type="button"
+                    x-on:click.prevent="$dispatch('open-modal', { name: 'choose-from-library'})">
+                    {{ __('Choose more from gallery') }}
+                </x-secondary-button>
+            </div>
+        </div>
+
+        <hr class="h-px my-8 bg-gray-200 border-0 dark:bg-gray-700">
+
+        <div class="grid gap-6 mb-6 md:grid-cols-1">
             <p class="mt-1 text-sm text-gray-600 dark:text-gray-400">&nbsp;</p>
             <div class="mt-6 flex justify-end gap-4">
                 <x-secondary-button type="submit">
@@ -97,33 +141,81 @@
                         {{ __('Cancel') }}
                     </a>
                 </x-primary-button>
-
             </div>
         </div>
     </form>
 
-    @include('livewire.admin.product.image-gallery-options')
 
-    @include('components.image-preview-modal')
-    @include('components.add-image-modal')
 
-    @script
-        <script>
-            console.log('live wire is here edit')
-            $(document).ready(function() {
-                $('#categoriesselect').select2()
-                    .on('change', function() {
-                        $wire.productCategoriesIds = $('#categoriesselect').val();
-                    })
 
-                $("#brandsselect").select2()
-                    .on('change', function() {
-                        $wire.product.brand_id = $('#brandsselect').val();
-                        console.log($wire.product);
-                    })
+    {{-- START IMAGE LIBRARY MODAL --}}
+    <x-modal maxWidth="80percent" height="h-full" wire:ignore.self name="choose-from-library" :show="$errors->imageAddition->isNotEmpty()"
+        focusable>
+        <div class="p-4 h-full flex flex-col justify-between overflow-y-auto gap-4">
+            <div class=" grid grid-cols-3 md:grid-cols-5 gap-8 justify-center items-stretch ">
+                @foreach ($imagesInLibrary as $image)
+                    <x-image-select-element width="w-[100px]" :image="$image"
+                        xBindClass="(selectedImages.findIndex(img => {{ $image->id }} == img.id) > -1) ? 'selected border-red-600 border-[0.25rem] p-1' : 'p-2'"
+                        clickAction="(selectedImages.findIndex(img => {{ $image->id }} == img.id) > -1) ? (
+                        selectedImages = selectedImages.filter(img => {{ $image->id }} !== img.id)
+                    ) : (
+                        selectedImages.push({!! $image->toJson() !!})
+                    );"
+                        data-id="{{ $image->id }}-allimgs" />
+                @endforeach
+            </div>
+            <div class="rounded-xl mx-auto bg-white bg-opacity-50 w-full" x-data="">
+                @if ($imagesInLibrary->hasPages())
+                    <div class="rounded-xl  p-2 font-bold ">
+                        {{ $imagesInLibrary->links() }}
+                    </div>
+                @endif
+            </div>
+            <div class="rounded-xl mx-auto flex justify-end w-full" x-data="">
+                <x-primary-button type="button" x-on:click.prevent="$dispatch('close')">
+                    {{ __('Done') }}
+                </x-primary-button>
 
-            })
-        </script>
-    @endscript
+            </div>
+        </div>
+    </x-modal>
+    {{-- END IMAGE LIBRARY MODAL --}}
 
+
+    <div>
+        {{-- @include('livewire.admin.product.image-gallery-options') --}}
+        @include('components.image-preview-modal')
+        @include('components.add-image-modal')
+    </div>
 </div>
+
+
+
+@script
+    <script>
+        Alpine.data('selectedImagesComponent', () => {
+            return {
+                selectedImages: @json($productImages),
+                init() {
+                    console.log(this.selectedImages);
+                },
+                removeImage(id) {
+                    this.selectedImages = this.selectedImages.filter(item => item.id !== id);
+                },
+            }
+        });
+
+        $(document).ready(function() {
+            $('#categoriesselect').select2()
+                .on('change', function() {
+                    $wire.productCategoriesIds = $('#categoriesselect').val();
+                })
+
+            $("#brandsselect").select2()
+                .on('change', function() {
+                    $wire.product.brand_id = $('#brandsselect').val();
+                    console.log($wire.product);
+                })
+        });
+    </script>
+@endscript

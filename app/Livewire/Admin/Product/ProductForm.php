@@ -66,12 +66,21 @@ class ProductForm extends Component
         return (new ProductFormRequest())->rules();
     }
 
+
+    public function resetInputs()
+    {
+        $this->images = [];
+        $this->imageToDelete = '';
+        $this->iteration++;
+    }
+
+
     public function addProduct()
     {
         foreach ($this->productImages as $value) {
             array_push($this->productImagesIds, $value['id']);
         }
-
+        dd($this->productImages);
         $this->validate();
         $this->product->save();
         $this->product->images()->sync($this->productImagesIds);

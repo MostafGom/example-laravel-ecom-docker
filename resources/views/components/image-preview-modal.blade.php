@@ -1,5 +1,7 @@
+@props(['image', 'xBindClass', 'clickAction', 'postfixId' => '', 'width' => 'w-[150px]', 'height' => 'h-[150px]'])
+
 <x-modal wire:ignore.self name="preview-image-modal"
-    position="absolute top-[50%] left-[50%] translate-y-[-50%] translate-x-[-50%]">
+    position="absolute top-[50%] left-[50%] translate-y-[-50%] translate-x-[-50%] p-16">
 
     <div x-data="{ imgSrc: null, originalName: null }"
         x-on:open-modal.window="imgSrc = $event.detail.imgSrc;originalName = $event.detail.originalName" class="p-6"
