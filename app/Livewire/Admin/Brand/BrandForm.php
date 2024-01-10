@@ -19,6 +19,8 @@ class BrandForm extends Component
     public Brand $brand;
 
 
+    public $brandImage = [];
+
     #[Validate(['images.*' => 'image|max:1024'])]
     public $images = [];
 
@@ -35,6 +37,7 @@ class BrandForm extends Component
     public function mount(Brand $brand)
     {
         $this->brand = $brand;
+        $this->brandImage = $this->brand->image()->get();
         $this->brand->is_active =  $this->brand->is_active ?? 0;
     }
 

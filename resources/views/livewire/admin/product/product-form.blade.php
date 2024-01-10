@@ -249,6 +249,8 @@ $watch('selectedThumbnail', (val) => {
     </div>
 
 </div>
+
+
 @script
     <script>
         Alpine.data('selectedImagesComponent', () => {
