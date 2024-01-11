@@ -1,8 +1,9 @@
 <div x-data="selectedImageComponent" x-init="$watch('selectedImage', (val) => {
     console.log(val);
-    $wire.categoryImage = selectedImage
+    $wire.categoryImage = selectedImage;
     $wire.category.image_id = selectedImage.id
 });">
+    {{-- @dump($category) --}}
     <form wire:submit.prevent="addCategory">
         @csrf
         <div class="grid grid-cols-1 gap-2 divide-y">
@@ -128,7 +129,7 @@
     <script>
         Alpine.data('selectedImageComponent', () => {
             return {
-                selectedImage: @json($categoryImage[0]) || {
+                selectedImage: @json($categoryImage) || {
                     'id': 0,
                     'image_path': ''
                 },

@@ -19,7 +19,7 @@ class CategoryForm extends Component
 
     public Category $category;
 
-    public $categoryImage = [];
+    public $categoryImage;
 
 
     #[Validate(['images.*' => 'image|max:1024'])]
@@ -38,7 +38,7 @@ class CategoryForm extends Component
     public function mount(Category $category)
     {
         $this->category = $category;
-        $this->categoryImage = $this->category->image()->get();
+        $this->categoryImage = $this->category->image()->get()[0];
         $this->category->is_active =  $this->category->is_active ?? 0;
     }
 

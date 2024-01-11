@@ -86,7 +86,7 @@
     <script>
         Alpine.data('selectedImageComponent', () => {
             return {
-                selectedImage: @json($brandImage[0]) || {
+                selectedImage: @json($brandImage) || {
                     'id': 0,
                     'image_path': ''
                 },
