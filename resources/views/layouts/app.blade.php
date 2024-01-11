@@ -45,16 +45,10 @@
 
 
     <div x-data="{ sidebarOpen: false }" class="flex h-screen bg-gray-200 font-roboto">
-        @if (request()->ajax())
-        @else
-            @include('layouts.sidebar')
-        @endif
+        @include('layouts.sidebar')
 
         <div class="flex-1 flex flex-col overflow-hidden">
-            @if (request()->ajax())
-            @else
-                @include('layouts.header')
-            @endif
+            @include('layouts.header')
 
             {{-- 
                 @if (session('message'))

@@ -36,6 +36,10 @@ require __DIR__ . '/auth.php';
 // Admin Dashboard
 Route::prefix('admin')->middleware(['auth', 'verified', 'isAdmin'])->group(function () {
 
+    Route::get('/', function () {
+        return redirect('/admin/dashboard');
+    });
+
     Route::view('/dashboard', 'dashboard')->name('admindashboard');
 
 
