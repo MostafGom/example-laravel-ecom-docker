@@ -120,20 +120,15 @@
             </div>
         @endif
         <div>
-
-            <div class="">
-                @include('components.image-preview-modal')
-
-                @include('components.delete-confirm-modal', [
-                    'name' => 'confirm-brand-deletion',
-                    'errorDeletion' => 'brandDeletion',
-                    'destroyMethod' => 'destroyBrand',
-                    'closeEvent' => 'close-delete-brand-modal',
-                    'confirmationMessage' => 'Are you sure you want to delete your brand?',
-                    'confirmationWarningMessage' =>
-                        'Once your brand is deleted, all of its resources and data will be permanently deleted.',
-                ])
-            </div>
+            @include('components.delete-confirm-modal', [
+                'name' => 'confirm-brand-deletion',
+                'errorDeletion' => 'brandDeletion',
+                'destroyMethod' => 'destroyBrand',
+                'closeEvent' => 'close-delete-brand-modal',
+                'confirmationMessage' => 'Are you sure you want to delete your brand?',
+                'confirmationWarningMessage' =>
+                    'Once your brand is deleted, all of its resources and data will be permanently deleted.',
+            ])
         </div>
 
     </div>

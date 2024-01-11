@@ -18,7 +18,7 @@
         </div>
     </div>
 
-    <nav class="mt-10" x-data="{ urlAlpine: '' }">
+    <nav class="mt-10">
 
         <x-nav-link class="flex items-center px-6 py-2 mt-4 w-full" :href="route('admindashboard')" :active="request()->routeIs('admindashboard')">
 

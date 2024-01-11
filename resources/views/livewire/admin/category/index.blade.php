@@ -121,20 +121,15 @@
             </div>
         @endif
         <div>
-
-            <div class="">
-                @include('components.image-preview-modal')
-
-                @include('components.delete-confirm-modal', [
-                    'name' => 'confirm-category-deletion',
-                    'errorDeletion' => 'categoryDeletion',
-                    'destroyMethod' => 'destroyCategory',
-                    'closeEvent' => 'close-delete-category-modal',
-                    'confirmationMessage' => 'Are you sure you want to delete your category?',
-                    'confirmationWarningMessage' =>
-                        'Once your category is deleted, all of its resources and data will be permanently deleted.',
-                ])
-            </div>
+            @include('components.delete-confirm-modal', [
+                'name' => 'confirm-category-deletion',
+                'errorDeletion' => 'categoryDeletion',
+                'destroyMethod' => 'destroyCategory',
+                'closeEvent' => 'close-delete-category-modal',
+                'confirmationMessage' => 'Are you sure you want to delete your category?',
+                'confirmationWarningMessage' =>
+                    'Once your category is deleted, all of its resources and data will be permanently deleted.',
+            ])
         </div>
 
     </div>

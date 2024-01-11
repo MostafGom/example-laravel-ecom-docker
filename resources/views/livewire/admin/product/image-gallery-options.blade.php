@@ -1,67 +1,65 @@
-<div class="mt-24 bg-white">
-    <div class="bg-white dark:bg-gray-300 shadow">
-        <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8 flex justify-between">
-            <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-800 leading-tight">
-                {{ __('Choose Product Images') }}
-            </h2>
-            <x-primary-button class="dark:bg-gray-400" x-data="" type="button"
-                x-on:click.prevent="$dispatch('open-modal', { name: 'add-image-modal'})">
-                {{ __('Add images to gallery') }}
-            </x-primary-button>
-        </div>
-    </div>
-
-    @if (session('message'))
-        <div class="bg-blue-100 border-t border-b border-blue-500 text-blue-700 px-4 py-3" role="alert">
-            <div class="max-w-7xl mx-auto py-3 px-4 sm:px-6 lg:px-8">
-                <p class="font-bold">{{ session('message') }}</p>
-            </div>
-        </div>
-    @endif
-    <div x-data="selectedImagesComponent" class="">
-        <div class="flex gap-4 justify-center items-center  flex-wrap my-4">
-            <template x-for="image in selectedImages" :key="image.id">
-                <div>
-                    <div class="relative p-4 rounded-lg bg-gray-100">
-                        <img class='w-[150px] h-[150px] object-contain' :src="image.image_path" alt="imagealt">
-                        <button type='button' class="bg-red-400 rounded-lg absolute left-0 top-0"
-                            x-on:click="removeImage(image.id)">
-                            <x-svgicons.xmark-svg-icon />
-                        </button>
-                    </div>
-                </div>
-            </template>
-        </div>
-
-        <div class="h-[50px]"></div>
-
-        <div class="flex gap-4 justify-center items-center  flex-wrap">
+{{-- START IMAGE LIBRARY MODAL --}}
+<x-modal maxWidth="80percent" height="h-full" wire:ignore.self name="choose-from-library" :show="$errors->imageAddition->isNotEmpty()" focusable>
+    <div class="p-4 h-full flex flex-col justify-between overflow-y-auto gap-4">
+        <div class=" grid grid-cols-3 md:grid-cols-5 gap-8 justify-center items-stretch ">
             @foreach ($imagesInLibrary as $image)
-                <div x-data="">
-                    <x-image-select-element :image="$image"
-                        xBindClass="(selectedImages.findIndex(img => {{ $image->id }} == img.id) > -1) ? 'selected border-red-600 border-[0.25rem] p-1' : 'p-2'"
-                        clickAction="(selectedImages.findIndex(img => {{ $image->id }} == img.id) > -1) ? (
-                            selectedImages = selectedImages.filter(img => {{ $image->id }} !== img.id)
-                        ) : (
-                            selectedImages.push({!! $image->toJson() !!})
-                        );"
-                        data-id="{{ $image->id }}-allimgs" />
-
-                </div>
+                <x-image-select-element width="w-[100px]" :image="$image"
+                    xBindClass="(selectedImages.findIndex(img => {{ $image->id }} == img.id) > -1) ? 'selected border-red-600 border-[0.25rem] p-1' : 'p-2'"
+                    clickAction="(selectedImages.findIndex(img => {{ $image->id }} == img.id) > -1) ? (
+                    selectedImages = selectedImages.filter(img => {{ $image->id }} !== img.id)
+                ) : (
+                    selectedImages.push({!! $image->toJson() !!})
+                );"
+                    data-id="{{ $image->id }}-allimgs" />
             @endforeach
+        </div>
+        <div class="rounded-xl mx-auto bg-white bg-opacity-50 w-full" x-data="">
+            @if ($imagesInLibrary->hasPages())
+                <div class="rounded-xl  p-2 font-bold ">
+                    {{ $imagesInLibrary->links() }}
+                </div>
+            @endif
+        </div>
+        <div class="rounded-xl mx-auto flex justify-end w-full" x-data="">
+            <x-primary-button type="button" x-on:click.prevent="$dispatch('close')">
+                {{ __('Done') }}
+            </x-primary-button>
 
         </div>
     </div>
+</x-modal>
+{{-- END IMAGE LIBRARY MODAL --}}
 
-    <div class="h-[20px]"></div>
 
 
-    <div class="max-w-7xl mx-auto bg-white p-4" x-data="">
-        @if ($imagesInLibrary->hasPages())
-            <div class="bg-white p-2 mt-8 font-bold">
-                {{ $imagesInLibrary->links() }}
-            </div>
-        @endif
+{{-- START Thumbnail MODAL --}}
+<x-modal maxWidth="80percent" height="h-full" wire:ignore.self name="choose-thumbnail" :show="$errors->imageAddition->isNotEmpty()" focusable>
+    <div class="p-4 h-full flex flex-col justify-between overflow-y-auto gap-4">
+        <div class=" grid grid-cols-3 md:grid-cols-5 gap-8 justify-center items-stretch ">
+            @foreach ($imagesInLibrary as $image)
+                <x-image-select-element width="w-[100px]" :image="$image"
+                    xBindClass="(selectedThumbnail && selectedThumbnail.id == {{ $image->id }}) ? 'selected border-red-600 border-[0.25rem] p-1' : 'p-2'"
+                    clickAction="(selectedThumbnail && selectedThumbnail.id == {{ $image->id }}) ? (
+                        selectedThumbnail = {'id':0,'image_path':''}
+                    ) : (
+                        selectedThumbnail = {'id':{{ $image->id }},'image_path':'{{ $image->image_path }}'}
+                    );"
+                    data-id="{{ $image->id }}-allimgs" />
+            @endforeach
+        </div>
+        <div class="rounded-xl mx-auto bg-white bg-opacity-50 w-full" x-data="">
+            @if ($imagesInLibrary->hasPages())
+                <div class="rounded-xl  p-2 font-bold ">
+                    {{ $imagesInLibrary->links() }}
+                </div>
+            @endif
+        </div>
+        <div class="rounded-xl mx-auto flex justify-end w-full" x-data="">
+            <x-primary-button type="button" x-on:click.prevent="$dispatch('close')">
+                {{ __('Done') }}
+            </x-primary-button>
+
+        </div>
     </div>
-
-</div>
+</x-modal>
+{{-- END Thumbnail MODAL --}}
