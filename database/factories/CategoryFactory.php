@@ -21,7 +21,7 @@ class CategoryFactory extends Factory
 
         return [
             'name' => $fakeWord,
-            'slug' => Str::slug($fakeWord),
+            'slug' => fake()->slug(3),
             'description' => fake()->text(),
             'meta_title' => fake()->text(),
             'meta_keyword' => fake()->text(),

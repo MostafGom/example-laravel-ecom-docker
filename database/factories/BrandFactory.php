@@ -20,7 +20,7 @@ class BrandFactory extends Factory
         $fakeCompany = fake()->company();
         return [
             'name' => $fakeCompany,
-            'slug' => Str::slug($fakeCompany),
+            'slug' => fake()->slug(3),
             'image_id' => rand(1, 100),
             'is_active' => fake()->randomElement([1, 0]),
         ];
