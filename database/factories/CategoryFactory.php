@@ -17,11 +17,11 @@ class CategoryFactory extends Factory
      */
     public function definition(): array
     {
-        $fakeWord = fake()->word();
+        $fakeWord = fake()->words(2, true);
 
         return [
             'name' => $fakeWord,
-            'slug' => Str::slug($fakeWord),
+            'slug' => fake()->slug(3),
             'description' => fake()->text(),
             'meta_title' => fake()->text(),
             'meta_keyword' => fake()->text(),

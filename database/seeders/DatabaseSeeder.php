@@ -9,6 +9,7 @@ use App\Models\Category;
 use App\Models\Image;
 use App\Models\Product;
 use App\Models\User;
+use App\Models\Variant;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
@@ -43,13 +44,13 @@ class DatabaseSeeder extends Seeder
         $imagesSeeded = DB::select('select * from images');
 
         foreach (range(1, 200) as $index) {
-            $fakeTitle = fake()->word();
+            $fakeTitle = fake()->words(2, true);
             $randomImageIndex = rand(1, 499);
             $randomImage = $imagesSeeded[$randomImageIndex];
 
             Product::factory()->create([
                 'name' => $fakeTitle,
-                'slug' => Str::slug($fakeTitle),
+                'slug' => fake()->slug(3),
                 'short_description' => fake()->text(),
                 'long_description' => fake()->text(),
                 'price' => fake()->numberBetween(99, 999),
@@ -73,6 +74,30 @@ class DatabaseSeeder extends Seeder
             DB::table('category_product')->insert([
                 'product_id' => fake()->randomElement($productsIDs),
                 'category_id' => fake()->randomElement($categoriesIDs)
+            ]);
+        }
+
+        Variant::factory(50)->create();
+
+        $variantsIDs = DB::table('variants')->pluck('id');
+
+        foreach (range(1, 100) as $index) {
+            DB::table('variant_attributes')->insert([
+                'name' => fake()->word(),
+                'variant_id' => fake()->randomElement($variantsIDs),
+            ]);
+        }
+
+        $variantsAttributesIDs = DB::table('variant_attributes')->pluck('id');
+
+        foreach (range(1, 500) as $index) {
+            DB::table('product_variant_attributes')->insert([
+                'name' => fake()->word(),
+                'sku' => fake()->word(),
+                'price_override' => fake()->numberBetween(99, 999),
+                'stock_quantity' => fake()->numberBetween(0, 100),
+                'product_id' => fake()->randomElement($productsIDs),
+                'variant_attribute_id' => fake()->randomElement($variantsAttributesIDs),
             ]);
         }
     }

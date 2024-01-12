@@ -11,17 +11,13 @@ return new class extends Migration
      */
     public function up(): void
     {
-
-        Schema::create('categories', function (Blueprint $table) {
+        Schema::create('variant_attributes', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->string('slug')->unique();
-            $table->longText('description');
-            $table->string('meta_title');
-            $table->string('meta_keyword');
-            $table->mediumText('meta_description');
-            $table->tinyInteger('is_active')->default(1);
-            $table->string('image_id')->nullable();
+
+            $table->unsignedBigInteger('variant_id');
+            $table->foreign('variant_id')->references('id')->on('variants')->onDelete('cascade');
+
             $table->timestamps();
         });
     }
@@ -31,6 +27,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('categories');
+        Schema::dropIfExists('variant_attributes');
     }
 };
