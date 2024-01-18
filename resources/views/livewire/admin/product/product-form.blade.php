@@ -113,7 +113,7 @@ $watch('selectedThumbnail', (val) => {
 
             <div class="flex gap-4 justify-start items-center  flex-wrap my-4">
                 <template x-for="image in selectedImages" :key="image.id">
-                    <div>
+                    <div x-init="console.log(image.image_path)">
                         <div class="relative p-4 rounded-lg bg-gray-100">
                             <img class='w-[100px] h-[100px] object-contain' :src="image.image_path" alt="imagealt">
                             <button type='button' class="bg-red-600 rounded-full absolute left-0 top-0"
@@ -181,7 +181,6 @@ $watch('selectedThumbnail', (val) => {
     </div>
 
 </div>
-
 
 @script
     <script>

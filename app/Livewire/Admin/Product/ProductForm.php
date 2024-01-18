@@ -2,19 +2,19 @@
 
 namespace App\Livewire\Admin\Product;
 
-use App\Http\Requests\ProductFormRequest;
 use App\Models\Brand;
-use App\Models\Category;
 use App\Models\Image;
 use App\Models\Product;
-use Barryvdh\Debugbar\Facades\Debugbar;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Storage;
 use Livewire\Component;
+use App\Models\Category;
 use Livewire\Attributes\Url;
 use Livewire\WithPagination;
-use Livewire\Attributes\Validate;
 use Livewire\WithFileUploads;
+use Livewire\Attributes\Validate;
+use Illuminate\Support\Facades\DB;
+use Barryvdh\Debugbar\Facades\Debugbar;
+use Illuminate\Support\Facades\Storage;
+use App\Http\Requests\ProductFormRequest;
 
 class ProductForm extends Component
 {
@@ -47,8 +47,12 @@ class ProductForm extends Component
     public function mount(Product $product)
     {
         $this->product = $product;
-        $this->productCategoriesIds = $this->product->categories()->pluck('category_id')->toArray();
-        $this->productImages = $this->product->images()->get()->toArray();
+        if ($this->product->exists) {
+            $this->productCategoriesIds = $this->product->categories()->pluck('category_id')->toArray();
+            $this->productImages = $this->product->images()->get()->toArray();
+        } else {
+            $this->product->thumbnail = '{"id":0,"image_path":""}';
+        }
 
         $this->allCategories = DB::select('select * from categories');
         $this->allBrands = DB::select('select * from brands');
