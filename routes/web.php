@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\ProfileController;
+use App\Models\Product;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -39,6 +40,7 @@ Route::prefix('admin')->middleware(['auth', 'verified', 'isAdmin'])->group(funct
     Route::get('/', function () {
         return redirect('/admin/dashboard');
     });
+
 
     Route::view('/dashboard', 'dashboard')->name('admindashboard');
 

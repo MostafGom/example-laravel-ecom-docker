@@ -55,6 +55,7 @@ class DatabaseSeeder extends Seeder
                 'long_description' => fake()->text(),
                 'price' => fake()->numberBetween(99, 999),
                 'sku' => fake()->word(),
+                'is_active' => fake()->randomElement([0, 1]),
                 'thumbnail' => json_encode(['id' => $randomImage->id, 'image_path' => $randomImage->image_path]),
                 'brand_id' => rand(1, $this->numberOfBrands),
             ]);
