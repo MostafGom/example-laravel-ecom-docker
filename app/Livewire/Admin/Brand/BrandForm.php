@@ -37,7 +37,10 @@ class BrandForm extends Component
     public function mount(Brand $brand)
     {
         $this->brand = $brand;
-        $this->brandImage = $this->brand->image()->get()[0];
+        if ($this->brand->exists) {
+            $this->brandImage = $this->brand->image()->get()[0];
+        }
+
         $this->brand->is_active =  $this->brand->is_active ?? 0;
     }
 

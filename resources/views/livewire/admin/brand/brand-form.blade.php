@@ -14,15 +14,15 @@
         <div class="grid gap-6 mb-6 md:grid-cols-1">
             <div>
                 <x-input-label class="font-bold text-xl text-white dark:text-gray-800" for="name" :value="__('Name')" />
-                <x-text-input id="name" class="block mt-1 w-full" type="text" name="name"
-                    wire:model="brand.name" required autofocus />
+                <input id="name" class="block mt-1 w-full" type="text" name="name" wire:model="brand.name"
+                    required autofocus />
                 <x-input-error :messages="$errors->get('name')" class="mt-2" />
             </div>
             <div>
                 <x-input-label class="font-bold text-xl text-white dark:text-gray-800" for="slug"
                     :value="__('Slug')" />
-                <x-text-input id="slug" class="block mt-1 w-full" type="text" name="slug"
-                    wire:model="brand.slug" required />
+                <input id="slug" class="block mt-1 w-full" type="text" name="slug" wire:model="brand.slug"
+                    required />
                 <x-input-error :messages="$errors->get('slug')" class="mt-2" />
             </div>
             <div>

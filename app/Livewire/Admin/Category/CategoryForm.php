@@ -38,7 +38,9 @@ class CategoryForm extends Component
     public function mount(Category $category)
     {
         $this->category = $category;
-        $this->categoryImage = $this->category->image()->get()[0];
+        if ($this->category->exists) {
+            $this->categoryImage = $this->category->image()->get()[0];
+        }
         $this->category->is_active =  $this->category->is_active ?? 0;
     }
 
