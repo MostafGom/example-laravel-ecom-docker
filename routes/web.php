@@ -54,8 +54,8 @@ Route::prefix('admin')->middleware(['auth', 'verified', 'isAdmin'])->group(funct
 
     // Brand routes
     Route::controller(App\Http\Controllers\Admin\BrandController::class)->group(function () {
-        Route::get('brand',  'index')->name('adminbrand');
-        Route::get('brand/create',  'create')->name('adminbrandcreate');
+        Route::view('brand',  'admin.brand.index')->name('adminbrand');
+        Route::view('brand/create',  'admin.brand.create')->name('adminbrandcreate');
         Route::get('brand/{brand}/edit', 'edit')->name('adminbrandedit');
     });
 

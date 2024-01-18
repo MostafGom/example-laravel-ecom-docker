@@ -10,15 +10,6 @@ use Illuminate\Support\Facades\DB;
 
 class BrandController extends Controller
 {
-    public function index()
-    {
-        return view('admin.brand.index');
-    }
-
-    public function create()
-    {
-        return view('admin.brand.create');
-    }
 
     public function edit(Brand $brand)
     {
