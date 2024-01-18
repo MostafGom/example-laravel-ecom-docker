@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('images', function (Blueprint $table) {
             $table->id();
-            $table->string('image_path');
+            $table->string('image_path', 255);
             $table->string('original_name');
             $table->string('mime_type');
             $table->timestamps();
