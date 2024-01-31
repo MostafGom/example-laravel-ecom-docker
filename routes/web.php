@@ -52,6 +52,12 @@ Route::prefix('admin')->middleware(['auth', 'verified', 'isAdmin'])->group(funct
         Route::get('category/{category}/edit', 'edit')->name('admincategoryedit');
     });
 
+
+    // Variant routes
+    // Route::controller(App\Http\Controllers\Admin\CategoryController::class)->group(function () {
+    //     Route::view('variant',  'admin.variant.index')->name('adminvariant');
+    // });
+
     // Brand routes
     Route::controller(App\Http\Controllers\Admin\BrandController::class)->group(function () {
         Route::view('brand',  'admin.brand.index')->name('adminbrand');

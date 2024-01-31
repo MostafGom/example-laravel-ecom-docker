@@ -29,6 +29,7 @@ class ProductForm extends Component
     public $allBrands = [];
     public $productImagesIds = [];
     public $productImages = [];
+    public $productVariantsAttributes = [];
 
 
     #[Validate(['images.*' => 'image|max:1024'])]
@@ -50,6 +51,7 @@ class ProductForm extends Component
         if ($this->product->exists) {
             $this->productCategoriesIds = $this->product->categories()->pluck('category_id')->toArray();
             $this->productImages = $this->product->images()->get()->toArray();
+            $this->productVariantsAttributes = $this->product->productVariantAttributes()->get()->toArray();
         } else {
             $this->product->thumbnail = '{"id":0,"image_path":""}';
         }
