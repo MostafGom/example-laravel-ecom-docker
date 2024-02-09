@@ -21,4 +21,11 @@ class Variant extends Model
     {
         return $this->belongsTo(Product::class);
     }
+
+
+    public function scopeSearch($query, $value)
+    {
+        $query->where('name', 'like', "%{$value}%")
+            ->orWhere('id', 'like', "%{$value}%");
+    }
 }

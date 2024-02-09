@@ -16,6 +16,7 @@ use Barryvdh\Debugbar\Facades\Debugbar;
 use Illuminate\Support\Facades\Storage;
 use App\Http\Requests\ProductFormRequest;
 
+
 class ProductForm extends Component
 {
     use WithPagination;

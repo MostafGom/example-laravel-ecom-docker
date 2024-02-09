@@ -54,9 +54,10 @@ Route::prefix('admin')->middleware(['auth', 'verified', 'isAdmin'])->group(funct
 
 
     // Variant routes
-    // Route::controller(App\Http\Controllers\Admin\CategoryController::class)->group(function () {
-    //     Route::view('variant',  'admin.variant.index')->name('adminvariant');
-    // });
+    Route::controller(App\Http\Controllers\Admin\VariantController::class)->group(function () {
+        Route::view('variant',  'admin.variant.index')->name('adminvariant');
+        Route::get('variant/{variant}/edit', 'admin.variant.index')->name('adminvariantedit');
+    });
 
     // Brand routes
     Route::controller(App\Http\Controllers\Admin\BrandController::class)->group(function () {

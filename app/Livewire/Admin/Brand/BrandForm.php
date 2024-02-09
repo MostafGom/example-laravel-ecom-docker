@@ -41,7 +41,7 @@ class BrandForm extends Component
             $this->brandImage = $this->brand->image()->get()[0];
         }
 
-        $this->brand->is_active =  $this->brand->is_active ?? 0;
+        $this->brand->is_active = $this->brand->is_active ?? 0;
     }
 
     public function render()
