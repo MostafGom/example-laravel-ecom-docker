@@ -1,4 +1,4 @@
-<x-modal wire:ignore.self name="add-variant-modal" :show="$errors->variantAddition->isNotEmpty()" focusable>
+<x-modal wire:ignore.self name="add-variant-modal" {{-- :show="$errors->variantAddition->isNotEmpty()" --}} focusable>
 
     <form wire:submit.prevent="addVariant" class="p-6" x-on:close-add-variant-modal.window="show=false">
         @csrf
@@ -9,9 +9,7 @@
         <div class="grid gap-6 mb-6 md:grid-cols-1 p-6">
             <div>
                 <x-input-label for="name" :value="__('Name')" />
-                <input id="name" class="block mt-1 w-full" type="text" name="name" wire:model.defer="name"
-                    required />
-                {{-- <x-input-error for="name" class="mt-2" /> --}}
+                <input id="name" class="block mt-1 w-full" type="text" wire:model="name" />
             </div>
 
         </div>

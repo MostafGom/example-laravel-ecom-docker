@@ -11,6 +11,7 @@ class Index extends Component
 {
 
     public $name = '';
+    public Variant $variant;
 
     #[Url(history: true)]
     public $search = '';
@@ -49,7 +50,6 @@ class Index extends Component
 
     public function render()
     {
-
         $variants = Variant::search($this->search)
             // ->with(['images','categories', 'brand'])
             ->orderBy($this->sortBy, $this->sortDirection)
@@ -69,11 +69,26 @@ class Index extends Component
         $validatedData = $this->validate();
 
         Variant::create([
-            'name' => $this->name,
+            'name' => $validatedData['name'],
         ]);
+        session()->flash('message', 'Variant Created Successfully');
+        $this->dispatch('close-add-variant-modal');
+        $this->resetInputs();
+    }
+
+    public function editVariant($variantId)
+    {
+        $validatedData = $this->validate();
+
+        $this->variant->save();
 
         session()->flash('message', 'Variant Created Successfully');
         $this->dispatch('close-add-variant-modal');
         $this->resetInputs();
+    }
+
+
+    public function deleteVariant()
+    {
     }
 }
