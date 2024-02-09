@@ -64,12 +64,14 @@
                                             <td class="px-4 py-3">{{ $variant->updated_at }}</td>
                                             <td class="px-4 py-3 flex items-center justify-between gap-1">
 
-                                                <a href="{{ route('adminvariantedit', $variant->id) }}">
-                                                    <x-secondary-button>
-                                                        <x-svgicons.edit-svg-icon size='5' />
 
-                                                    </x-secondary-button>
-                                                </a>
+                                                <x-secondary-button class="" x-data=""
+                                                    type="button"
+                                                    x-on:click.prevent="$dispatch('open-modal', { name: 'add-variant-modal'})">
+                                                    <x-svgicons.edit-svg-icon size='5' />
+
+                                                </x-secondary-button>
+
 
                                                 <x-danger-button wire:click="deleteVariant('{{ $variant['id'] }}')"
                                                     x-data=""

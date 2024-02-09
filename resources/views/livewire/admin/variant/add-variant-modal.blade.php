@@ -1,4 +1,4 @@
-<x-modal wire:ignore.self name="add-variant-modal" {{-- :show="$errors->variantAddition->isNotEmpty()" --}} focusable>
+<x-modal wire:ignore.self name="add-variant-modal" :show="$errors->variantAddition->isNotEmpty()" focusable>
 
     <form wire:submit.prevent="addVariant" class="p-6" x-on:close-add-variant-modal.window="show=false">
         @csrf
@@ -11,6 +11,7 @@
                 <x-input-label for="name" :value="__('Name')" />
                 <input id="name" class="block mt-1 w-full" type="text" wire:model="name" />
             </div>
+            <x-input-error :messages="$errors->get('name')" class="mt-2" />
 
         </div>
 
