@@ -12,7 +12,6 @@
                 <input id="name" class="block mt-1 w-full" type="text" wire:model="name" />
             </div>
             <x-input-error :messages="$errors->get('name')" class="mt-2" />
-
         </div>
 
         <p class="mt-1 text-sm text-gray-600 dark:text-gray-400">&nbsp;</p>
