@@ -1,6 +1,6 @@
-<x-modal wire:ignore.self name="add-variant-modal" :show="$errors->variantAddition->isNotEmpty()" focusable>
+<x-modal wire:ignore.self name="variant-form-modal" :show="$errors->variantAddition->isNotEmpty()" focusable>
 
-    <form wire:submit.prevent="addVariant" class="p-6" x-on:close-add-variant-modal.window="show=false">
+    <form wire:submit.prevent="saveVariant" class="p-6" x-on:close-variant-form-modal.window="show=false">
         @csrf
         <h2 class="text-lg font-medium text-gray-900 dark:text-gray-100 p-6">
             {{ __('Add variant') }}

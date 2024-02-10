@@ -51,7 +51,6 @@ Route::prefix('admin')->middleware(['auth', 'verified', 'isAdmin'])->group(funct
         Route::get('category/{category}/edit', 'edit')->name('admincategoryedit');
     });
 
-
     // Brand routes
     Route::controller(App\Http\Controllers\Admin\BrandController::class)->group(function () {
         Route::view('brand',  'admin.brand.index')->name('adminbrand');

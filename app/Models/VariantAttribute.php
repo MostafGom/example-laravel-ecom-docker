@@ -21,4 +21,10 @@ class VariantAttribute extends Model
     {
         return $this->hasMany(ProductVariantAttribute::class, 'variant_attribute_id', 'id');
     }
+
+    public function scopeSearch($query, $value)
+    {
+        $query->where('name', 'like', "%{$value}%")
+            ->orWhere('id', 'like', "%{$value}%");
+    }
 }

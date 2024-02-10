@@ -65,7 +65,7 @@
                                             <td class="px-4 py-3 flex items-center justify-between gap-1">
 
                                                 <x-secondary-button x-data="" type="button"
-                                                    wire:click="editVariant('{{ $variant['id'] }}');$dispatch('open-modal', { name: 'edit-variant-modal'})">
+                                                    wire:click="editVariant('{{ $variant['id'] }}');$dispatch('open-modal', { name: 'variant-form-modal'})">
                                                     <x-svgicons.edit-svg-icon size='5' />
                                                 </x-secondary-button>
 
@@ -123,9 +123,7 @@
                     'Once your variant is deleted, all of its resources and data will be permanently deleted.',
             ])
 
-            @include('livewire.admin.variant.add-variant-modal')
-            @include('livewire.admin.variant.edit-variant-modal')
-
+            @include('livewire.admin.variant.variant-form-modal')
         </div>
 
     </div>

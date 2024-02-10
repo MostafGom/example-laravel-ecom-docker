@@ -69,18 +69,18 @@ class Index extends Component
     public function resetInputs()
     {
         $this->name = '';
+        $this->variant = new Variant();
+        $this->variantToDelete = new Variant();
     }
 
 
-    public function addVariant()
+    public function saveVariant()
     {
         $validatedData = $this->validate();
-
-        Variant::create([
-            'name' => $validatedData['name'],
-        ]);
-        session()->flash('message', 'Variant Created Successfully');
-        $this->dispatch('close-add-variant-modal');
+        $this->variant->fill($validatedData);
+        $this->variant->save();
+        session()->flash('message', 'Variant Saved Successfully');
+        $this->dispatch('close-variant-form-modal');
         $this->resetInputs();
     }
 
@@ -88,17 +88,6 @@ class Index extends Component
     {
         $this->variant = Variant::findOrFail($variantId);
         $this->name = $this->variant->name;
-    }
-
-    public function updateVariant()
-    {
-        $validatedData = $this->validate();
-        $this->variant->name = $validatedData['name'];
-        $this->variant->save();
-
-        session()->flash('message', 'Variant Updated Successfully');
-        $this->dispatch('close-edit-variant-modal');
-        $this->resetInputs();
     }
 
 
