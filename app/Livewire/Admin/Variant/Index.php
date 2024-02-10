@@ -6,11 +6,14 @@ use App\Http\Requests\VariantFormRequest;
 use App\Models\Variant;
 use Livewire\Component;
 use Livewire\Attributes\Url;
+use Livewire\WithPagination;
 
 class Index extends Component
 {
+    use WithPagination;
 
     public $name = '';
+    public Variant $variantToDelete;
     public Variant $variant;
 
     #[Url(history: true)]
@@ -29,13 +32,19 @@ class Index extends Component
 
     public function updatedSearch()
     {
+
         $this->resetPage();
     }
+
     public function updatedPerPage()
     {
         $this->resetPage();
     }
 
+    public function mount(Variant $variant)
+    {
+        $this->variant = $variant;
+    }
 
     public function setSortBy($sortColumn)
     {
@@ -51,7 +60,6 @@ class Index extends Component
     public function render()
     {
         $variants = Variant::search($this->search)
-            // ->with(['images','categories', 'brand'])
             ->orderBy($this->sortBy, $this->sortDirection)
             ->paginate($this->perPage);
         return view('livewire.admin.variant.index', ['variants' => $variants]);
@@ -78,17 +86,32 @@ class Index extends Component
 
     public function editVariant($variantId)
     {
-        $validatedData = $this->validate();
+        $this->variant = Variant::findOrFail($variantId);
+        $this->name = $this->variant->name;
+    }
 
+    public function updateVariant()
+    {
+        $validatedData = $this->validate();
+        $this->variant->name = $validatedData['name'];
         $this->variant->save();
 
-        session()->flash('message', 'Variant Created Successfully');
-        $this->dispatch('close-add-variant-modal');
+        session()->flash('message', 'Variant Updated Successfully');
+        $this->dispatch('close-edit-variant-modal');
         $this->resetInputs();
     }
 
 
-    public function deleteVariant()
+    public function deleteVariant($id)
     {
+        $this->variantToDelete = Variant::findOrFail($id);
+    }
+
+    public function destroyVariant()
+    {
+        $this->variantToDelete->delete();
+        session()->flash('message', 'Variant Deleted Successfully');
+        $this->dispatch('close-delete-variant-modal');
+        $this->resetInputs();
     }
 }

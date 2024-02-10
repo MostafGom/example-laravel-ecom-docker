@@ -64,19 +64,15 @@
                                             <td class="px-4 py-3">{{ $variant->updated_at }}</td>
                                             <td class="px-4 py-3 flex items-center justify-between gap-1">
 
-
                                                 <x-secondary-button class="" x-data=""
                                                     type="button"
-                                                    x-on:click.prevent="$dispatch('open-modal', { name: 'add-variant-modal'})">
+                                                    wire:click="editVariant('{{ $variant['id'] }}');$dispatch('open-modal', { name: 'edit-variant-modal'})">
                                                     <x-svgicons.edit-svg-icon size='5' />
-
                                                 </x-secondary-button>
 
-
-                                                <x-danger-button wire:click="deleteVariant('{{ $variant['id'] }}')"
-                                                    x-data=""
-                                                    x-on:click.prevent="$dispatch('open-modal', { name: 'confirm-variant-deletion'})"
-                                                    class="p-0 rounded-full">
+                                                <x-danger-button
+                                                    wire:click="deleteVariant('{{ $variant['id'] }}');$dispatch('open-modal', { name: 'confirm-variant-deletion'})"
+                                                    x-data="" class="p-0 rounded-full">
                                                     {{-- {{ __('Delete') }} --}}
                                                     <x-svgicons.delete-svg-icon size='5' />
                                                 </x-danger-button>
@@ -129,6 +125,7 @@
             ])
 
             @include('livewire.admin.variant.add-variant-modal')
+            @include('livewire.admin.variant.edit-variant-modal')
 
         </div>
 
