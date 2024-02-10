@@ -64,8 +64,7 @@
                                             <td class="px-4 py-3">{{ $variant->updated_at }}</td>
                                             <td class="px-4 py-3 flex items-center justify-between gap-1">
 
-                                                <x-secondary-button class="" x-data=""
-                                                    type="button"
+                                                <x-secondary-button x-data="" type="button"
                                                     wire:click="editVariant('{{ $variant['id'] }}');$dispatch('open-modal', { name: 'edit-variant-modal'})">
                                                     <x-svgicons.edit-svg-icon size='5' />
                                                 </x-secondary-button>

@@ -13,7 +13,7 @@
 
         </div>
     </x-slot>
-    <div class="">
-        <livewire:admin.category.index />
+    <div>
+        @livewire('admin.category.index')
     </div>
 </x-app-layout>

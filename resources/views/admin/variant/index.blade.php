@@ -6,14 +6,14 @@
                 {{ __('Variant') }}
             </h2>
 
-            <x-primary-button class="" x-data="" type="button"
+            <x-primary-button x-data="" type="button"
                 x-on:click.prevent="$dispatch('open-modal', { name: 'add-variant-modal'})">
                 {{ __('Add Variant') }}
             </x-primary-button>
 
         </div>
     </x-slot>
-    <div class="">
-        <livewire:admin.variant.index />
+    <div>
+        @livewire('admin.variant.index')
     </div>
 </x-app-layout>

@@ -44,17 +44,12 @@ Route::prefix('admin')->middleware(['auth', 'verified', 'isAdmin'])->group(funct
 
     Route::view('/dashboard', 'dashboard')->name('admindashboard');
 
-
     // Category routes
     Route::controller(App\Http\Controllers\Admin\CategoryController::class)->group(function () {
         Route::view('category',  'admin.category.index')->name('admincategory');
         Route::view('category/create',  'admin.category.create')->name('admincategorycreate');
         Route::get('category/{category}/edit', 'edit')->name('admincategoryedit');
     });
-
-
-    // Variant routes
-    Route::view('variant',  'admin.variant.index')->name('adminvariant');
 
 
     // Brand routes
@@ -64,6 +59,8 @@ Route::prefix('admin')->middleware(['auth', 'verified', 'isAdmin'])->group(funct
         Route::get('brand/{brand}/edit', 'edit')->name('adminbrandedit');
     });
 
+    // Image Library
+    Route::view('image-library', 'admin.image-library.index')->name('adminimagelibrary');
 
     // Product routes
     Route::controller(App\Http\Controllers\Admin\ProductController::class)->group(function () {
@@ -72,6 +69,12 @@ Route::prefix('admin')->middleware(['auth', 'verified', 'isAdmin'])->group(funct
         Route::get('product/{product}/edit', 'edit')->name('adminproductedit');
     });
 
-    // Image Library
-    Route::view('image-library', 'admin.image-library.index')->name('adminimagelibrary');
+    // Variant routes
+    Route::view('variant',  'admin.variant.index')->name('adminvariant');
+
+    // Variant attrbiutes routes
+    Route::view('variant-attribute',  'admin.variant-attribute.index')->name('adminvariantattribute');
+
+    // Product variant attributes routes
+    Route::view('product-variant-attribute',  'admin.product-variant-attribute.index')->name('adminproductvariantattribute');
 });

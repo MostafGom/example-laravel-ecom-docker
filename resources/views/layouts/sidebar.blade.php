@@ -64,9 +64,20 @@
             <span class="mx-3">{{ __('Products') }}</span>
         </x-nav-link>
 
+
         <x-nav-link class="flex items-center px-6 py-2 mt-4 w-full" :href="route('adminvariant')" :active="request()->routeIs('adminvariant')">
             <x-svgicons.shopping-bag-svg-icon size='6' color='currentColor' />
             <span class="mx-3">{{ __('Variants') }}</span>
+        </x-nav-link>
+
+        <x-nav-link class="flex items-center px-6 py-2 mt-4 w-full" :href="route('adminvariantattribute')" :active="request()->routeIs('adminvariantattribute')">
+            <x-svgicons.shopping-bag-svg-icon size='6' color='currentColor' />
+            <span class="mx-3">{{ __('Variants Attributes') }}</span>
+        </x-nav-link>
+
+        <x-nav-link class="flex items-center px-6 py-2 mt-4 w-full" :href="route('adminproductvariantattribute')" :active="request()->routeIs('adminproductvariantattribute')">
+            <x-svgicons.shopping-bag-svg-icon size='6' color='currentColor' />
+            <span class="mx-3">{{ __('Products Variants') }}</span>
         </x-nav-link>
     </nav>
 </div>

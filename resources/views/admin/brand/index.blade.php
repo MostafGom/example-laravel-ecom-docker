@@ -14,7 +14,7 @@
 
         </div>
     </x-slot>
-    <div class="">
+    <div>
         <livewire:admin.brand.index />
     </div>
 </x-app-layout>
