@@ -91,11 +91,11 @@ class Index extends Component
     public function saveProductVariantAttribute()
     {
         $validatedData = $this->validate();
-        $this->variant->fill($validatedData);
+        $this->productVariantAttribute->fill($validatedData);
         $this->productVariantAttribute->save();
 
-        session()->flash('message', 'Variant Saved Successfully');
-        $this->dispatch('close-variant-attribute-form-modal');
+        session()->flash('message', 'Product Variant Saved Successfully');
+        $this->dispatch('close-product-variant-attribute-form-modal');
         $this->resetInputs();
     }
 

@@ -1,6 +1,6 @@
 <x-modal wire:ignore.self name="product-variant-attribute-form-modal" :show="$errors->variantAddition->isNotEmpty()" focusable>
 
-    <form wire:submit.prevent="saveVariantAttribute" class="p-6"
+    <form wire:submit.prevent="saveProductVariantAttribute" class="p-6"
         x-on:close-product-variant-attribute-form-modal.window="show=false">
         @csrf
         <h2 class="text-lg font-medium text-gray-900 dark:text-gray-100 p-6">

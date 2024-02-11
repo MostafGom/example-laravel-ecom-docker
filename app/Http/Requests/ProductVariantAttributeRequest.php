@@ -28,7 +28,7 @@ class ProductVariantAttributeRequest extends FormRequest
             'sku' => 'required|string|max:255',
             'product_id' => 'required|numeric|exists:products,id',
             'variant_attribute_id' => 'required|numeric|exists:variant_attributes,id',
-
+            'stock_quantity' => 'required|numeric',
         ];
     }
 }
