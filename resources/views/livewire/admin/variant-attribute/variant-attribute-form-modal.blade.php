@@ -16,9 +16,9 @@
                 <div class="fullwidthselect2 mt-2" wire:ignore>
                     <select wire:model="variant_id" class="w-full" id="variant_id" data-placeholder="Choose Variant">
                         <option></option>
-                        @foreach ($allVariants as $category)
-                            <option wire:key="{{ $category->id }}-{{ $category->name }}" value="{{ $category->id }}">
-                                {{ $category->name }}</option>
+                        @foreach ($allVariants as $variant)
+                            <option wire:key="{{ $variant->id }}-{{ $variant->name }}" value="{{ $variant->id }}">
+                                {{ $variant->name }}</option>
                         @endforeach
                     </select>
                 </div>

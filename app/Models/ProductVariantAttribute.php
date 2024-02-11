@@ -34,4 +34,20 @@ class ProductVariantAttribute extends Model
     {
         return $this->variantAttribute->variant();
     }
+
+
+    public function scopeSearch($query, $value)
+    {
+        $query->where('name', 'like', "%{$value}%")
+            ->orWhere('id', 'like', "%{$value}%");
+    }
+
+    public function scopeSearchWithVariantAttribute($query, $value)
+    {
+        $query->where('name', 'like', "%{$value}%")
+            ->orWhere('id', 'like', "%{$value}%")
+            ->orWhereHas('variantAttribute', function ($query) use ($value) {
+                $query->where('name', 'like', "%{$value}%");
+            });
+    }
 }

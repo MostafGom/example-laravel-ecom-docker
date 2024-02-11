@@ -7,7 +7,7 @@
             </h2>
 
             <x-primary-button x-data="" type="button"
-                x-on:click.prevent="$dispatch('open-modal', { name: 'add-product-variant-attribute-modal'})">
+                x-on:click.prevent="$dispatch('open-modal', { name: 'product-variant-attribute-form-modal'})">
                 {{ __('Add Product Variant Attribute') }}
             </x-primary-button>
         </div>

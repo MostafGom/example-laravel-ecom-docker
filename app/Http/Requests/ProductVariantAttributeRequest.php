@@ -11,7 +11,7 @@ class ProductVariantAttributeRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -21,8 +21,14 @@ class ProductVariantAttributeRequest extends FormRequest
      */
     public function rules(): array
     {
+
         return [
-            //
+            'name' => 'required|string|max:255',
+            'price_override' => 'required|numeric',
+            'sku' => 'required|string|max:255',
+            'product_id' => 'required|numeric|exists:products,id',
+            'variant_attribute_id' => 'required|numeric|exists:variant_attributes,id',
+
         ];
     }
 }
