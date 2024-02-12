@@ -24,7 +24,7 @@
             </x-secondary-button>
 
             <x-danger-button class="ms-3">
-                {{ __('Delete Category') }}
+                {{ __('Delete') }}
             </x-danger-button>
         </div>
     </form>

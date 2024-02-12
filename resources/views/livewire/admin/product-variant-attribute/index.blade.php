@@ -135,7 +135,7 @@
                                                 </x-secondary-button>
 
                                                 <x-danger-button
-                                                    wire:click="deleteVariantAttribute('{{ $productVariantAttribute['id'] }}');$dispatch('open-modal', { name: 'confirm-variantAttribute-deletion'})"
+                                                    wire:click="deleteProductVariantAttribute('{{ $productVariantAttribute['id'] }}');$dispatch('open-modal', { name: 'confirm-productVariantAttribute-deletion'})"
                                                     x-data="" class="p-0 rounded-full">
                                                     {{-- {{ __('Delete') }} --}}
                                                     <x-svgicons.delete-svg-icon size='5' />
@@ -180,8 +180,8 @@
             @include('components.delete-confirm-modal', [
                 'name' => 'confirm-productVariantAttribute-deletion',
                 'errorDeletion' => 'variantDeletion',
-                'destroyMethod' => 'destroyVariantAttribute',
-                'closeEvent' => 'close-delete-variant-attribute-modal',
+                'destroyMethod' => 'destroyProductVariantAttribute',
+                'closeEvent' => 'close-delete-product-variant-attribute-modal',
                 'confirmationMessage' => 'Are you sure you want to delete your productVariantAttribute?',
                 'confirmationWarningMessage' =>
                     'Once your productVariantAttribute is deleted, all of its resources and data will be permanently deleted.',

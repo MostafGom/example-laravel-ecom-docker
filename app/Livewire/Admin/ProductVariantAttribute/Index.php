@@ -117,9 +117,9 @@ class Index extends Component
 
     public function destroyProductVariantAttribute()
     {
-        $this->variantToDelete->delete();
-        session()->flash('message', 'Variant Deleted Successfully');
-        $this->dispatch('close-delete-variant-attribute-modal');
+        $this->productVariantAttributeToDelete->delete();
+        session()->flash('message', 'Product Variant Deleted Successfully');
+        $this->dispatch('close-delete-product-variant-attribute-modal');
         $this->resetInputs();
     }
 }
